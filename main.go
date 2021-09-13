@@ -31,10 +31,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	psw := strings.Join(r.Form["password"], " ")
 
 	for _, p := range users {
-		fmt.Println("huhuh")
 		if p.username == uname && p.password == psw {
-			fmt.Println("p: " + p.username + " " + p.password)
-			fmt.Println("************************************************************")
 			http.Redirect(w, r, "/signIn", http.StatusFound)
 
 		}
