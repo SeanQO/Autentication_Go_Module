@@ -23,17 +23,23 @@ type Data struct {
 var users = []*person{}
 
 func login(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("methodLogin:", r.Method) //get request method
 	r.ParseForm()
 	// logic part of log in
 
 	uname := strings.Join(r.Form["username"], " ")
 	psw := strings.Join(r.Form["password"], " ")
 
+	fmt.Println("Useruname: ", uname)
+	fmt.Println("Userpsw: ", psw)
+
 	for _, p := range users {
-		if p.username == uname && p.password == psw {
+		fmt.Println("uname: ", (strings.Compare(p.username, uname)))
+		fmt.Println("psw: ", (strings.Compare(p.password, psw)))
+		if (strings.Compare(p.username, uname))+(strings.Compare(p.password, psw)) == 0 {
 			http.Redirect(w, r, "/signIn", http.StatusFound)
 
+		} else {
+			fmt.Println("INVALID LOGIN")
 		}
 	}
 
@@ -42,7 +48,6 @@ func login(w http.ResponseWriter, r *http.Request) {
 }
 
 func signUp(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("methodSignUP:", r.Method)
 	t, _ := template.ParseFiles("signUp.html")
 	t.Execute(w, nil)
 	r.ParseForm()
@@ -59,7 +64,6 @@ func signUp(w http.ResponseWriter, r *http.Request) {
 }
 
 func signIn(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("methodSignIn:", r.Method)
 	t, _ := template.ParseFiles("signIn.html")
 	t.Execute(w, nil)
 	for _, p := range users {
