@@ -2,26 +2,29 @@
     <title></title>
     </head>
     <body>
-        <form action="/login" method="get" style="border:1px solid #ccc">
+        <form action="/signUp" method="POST" style="border:1px solid #ccc">
         <p>RPC:: Red de Programación Competitiva.</p>
             <div class="container">
                 <h1>Sign Up</h1>
                 <hr>
 
                 <label for="Username"><b>Username</b></label>
-                <input type="text" placeholder="Enter Username" name="username">
+                <input type="text" placeholder="Enter Username" name="username" required>
 
                 <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw">
+                <input type="password" placeholder="Enter Password" name="psw" required>
 
                 <label for="psw-repeat"><b>Repeat Password</b></label>
-                <input type="password" placeholder="Repeat Password" name="psw-repeat">
+                <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
 
                 <label for="fName"><b>Firstname</b></label>
-                <input type="text" placeholder="Enter FirstName" name="fname">
+                <input type="text" placeholder="Enter FirstName" name="fname" required>
 
                 <label for="lName"><b>Lastname</b></label>
-                <input type="text" placeholder="Enter LastName" name="lname">
+                <input type="text" placeholder="Enter LastName" name="lname" required>
+
+                <label for="birthdate"><b>Birthdate</b></label>
+                <input type="date" name="birthDate" placeholder="select Birth date" required>
 
                 <div class="clearfix">
                     <button type="submit" class="cancelbtn">Cancel</button>

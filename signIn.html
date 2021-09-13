@@ -1,33 +1,21 @@
-<head>
-    <title></title>
-    </head>
-    <body>
-        <form action="/login" method="get" style="border:1px solid #ccc">
-        <p>RPC:: Red de Programación Competitiva.</p>
-            <div class="container">
-                <h1>Sign Up</h1>
-                <hr>
-
-                <label for="Username"><b>Username</b></label>
-                <input type="text" placeholder="Enter Username" name="username">
-
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw">
-
-                <label for="psw-repeat"><b>Repeat Password</b></label>
-                <input type="password" placeholder="Repeat Password" name="psw-repeat">
-
-                <label for="fName"><b>Firstname</b></label>
-                <input type="text" placeholder="Enter FirstName" name="fname">
-
-                <label for="lName"><b>Lastname</b></label>
-                <input type="text" placeholder="Enter LastName" name="lname">
-
-                <div class="clearfix">
-                    <button type="submit" class="cancelbtn">Cancel</button>
-                    <button type="submit" class="signupbtn">Sign Up</button>
-                </div>
-
-            </div>
-        </form>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<table>
+    <tr>
+        <th>username</th>
+        <th>fname</th>
+        <th>lname</th>
+        <th>birthdate</th>
+    </tr>
+    {{ range .Items}}
+        <tr>
+            <td>{{ .username }}</td>
+            <td>{{ .fname }}</td>
+            <td>{{ .lname }}</td>
+            <td>{{ .birthdate }}</td>
+        </tr>
+    {{ end}}
+</table>
+</body>
+</html>
