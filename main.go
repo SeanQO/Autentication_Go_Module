@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
 	"html/template"
 	"log"
@@ -59,6 +60,14 @@ func signUp(w http.ResponseWriter, r *http.Request) {
 		birthDate := strings.Join(r.Form["birthDate"], " ")
 		p := person{username: username, password: password, fname: fname, lname: lname, birthDate: birthDate}
 		users = append(users, &p)
+
+		csvwriter := csv.NewWriter("data.csv")
+
+		for _, empRow := range empData {
+			_ = csvwriter.Write(empRow)
+		}
+
+		csvwriter.Flush()
 
 		http.Redirect(w, r, "/login", http.StatusFound)
 
