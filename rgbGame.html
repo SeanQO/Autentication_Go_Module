@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGB Game</title>
+    <link rel="stylesheet" href="rgbGame.css">
+</head>
+<body>
+    <h1>the great <br> <span id="displayColor"> rgb(188, 95, 138)</span><br> color game </h1>
+    <div id="barra">
+        <button id="reset" onclick="reset()">new game</button>
+        <span id="message">try again</span>
+        <button class="mode">beginner</button>
+        <button class="mode selected">expert</button>
+    </div>
+
+    <div id="container">
+         <div class="square"></div>
+         <div class="square"></div>
+         <div class="square"></div>
+         <div class="square"></div>
+         <div class="square"></div>
+         <div class="square"></div>
+    </div>
+
+    <script src="rgbGame.js"></script>
+</body>
+</html>
