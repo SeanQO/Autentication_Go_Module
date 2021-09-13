@@ -4,7 +4,7 @@
     <body>
         <form action="/signUp" method="POST" style="border:1px solid #ccc">
         <h2><b>RPC:: Red de Programación Competitiva.</b></h2>
-            <div class="container">
+            <div>
                 <h1>Sign Up</h1>
                 <hr>
 
@@ -26,11 +26,15 @@
                 <label for="birthdate"><b>Birthdate</b></label>
                 <input type="date" name="birthDate" placeholder="select Birth date" required>
 
-                <div class="clearfix">
-                    <button type="submit" class="cancelbtn">Cancel</button>
+                <div>
                     <button type="submit" class="signupbtn">Sign Up</button>
                 </div>
 
+            </div>
+        </form>
+        <form action="/login" method="GET">
+            <div>
+                <button type="submit" class="cancelbtn">Cancel</button>
             </div>
         </form>
     </body>    

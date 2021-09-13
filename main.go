@@ -23,6 +23,7 @@ type Data struct {
 var users = []*person{}
 
 func login(w http.ResponseWriter, r *http.Request) {
+
 	r.ParseForm()
 	// logic part of log in
 
@@ -33,11 +34,10 @@ func login(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Userpsw: ", psw)
 
 	for _, p := range users {
-		fmt.Println("uname: ", (strings.Compare(p.username, uname)))
-		fmt.Println("psw: ", (strings.Compare(p.password, psw)))
 		if (strings.Compare(p.username, uname))+(strings.Compare(p.password, psw)) == 0 {
+			uname = ""
+			psw = ""
 			http.Redirect(w, r, "/signIn", http.StatusFound)
-
 		} else {
 			fmt.Println("INVALID LOGIN")
 		}
@@ -50,16 +50,19 @@ func login(w http.ResponseWriter, r *http.Request) {
 func signUp(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("signUp.html")
 	t.Execute(w, nil)
-	r.ParseForm()
-	username := strings.Join(r.Form["username"], " ")
-	password := strings.Join(r.Form["psw"], " ")
-	fname := strings.Join(r.Form["fname"], " ")
-	lname := strings.Join(r.Form["lname"], " ")
-	birthDate := strings.Join(r.Form["birthDate"], " ")
-	p := person{username: username, password: password, fname: fname, lname: lname, birthDate: birthDate}
-	users = append(users, &p)
+	if r.Method == "POST" {
+		r.ParseForm()
+		username := strings.Join(r.Form["username"], " ")
+		password := strings.Join(r.Form["psw"], " ")
+		fname := strings.Join(r.Form["fname"], " ")
+		lname := strings.Join(r.Form["lname"], " ")
+		birthDate := strings.Join(r.Form["birthDate"], " ")
+		p := person{username: username, password: password, fname: fname, lname: lname, birthDate: birthDate}
+		users = append(users, &p)
 
-	http.Redirect(w, r, "/login", http.StatusFound)
+		http.Redirect(w, r, "/login", http.StatusFound)
+
+	}
 
 }
 
