@@ -1,51 +1,27 @@
-<html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="login.css" />
-</head>
-<body>
-    <div class="squareContainer">
-        <div class="division" style="max-height:min-content">
-            <h3>Sign in</h3>
+    <style>
+        h1 {text-align: center;}
+        #cent{text-align: center;}
+    </style>
+    <title>login</title>
+    </head>
+    <body>
+        <h2 id="cent"><b>RPC:: Red de Programación Competitiva.</b></h2>
+        <div id="cent" style="size: 100px, 200px;">
+        <form action="/signUp" method="GET">
+            <input type="submit" value="Sign Up">
+        </form>
 
-        </div>
-        <br />
-
-        <form form action="/login" method="POST">
-            <div>
-
-                <label>Username</label>
-                <br />
-                <input type="text" name="username">
+        <form action="/login" method="POST">
+            <input type="submit" value="Sign In">
+            <div id="cent">
+                Username:<input type="text" name="username">
             </div>
-
-            <div>
-                <label>Password</label>
-                <br />
-                <input type="password" name="password">
+            <div id="cent">
+                Password:<input type="password" name="password">
             </div>
-            <br />
-
-            <div>
-                <input type="submit" value="SIGN IN">
-            </div>
-            <br />
-
         </form>
         
-        <div class="division">
         </div>
-        <br />
 
-        <div>
-            <label>New User</label>
-            <br />
-            <form action="/signUp" method="GET">
-                <input class="principalButton" id="signUp" name="signUp" style="color:white"  type="submit" value="Sign Up">
-            </form>
-        </div>
-        <br />
-    </div>
-
-</body>
-</html>
+    </body>
