@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 )
 
@@ -21,18 +22,14 @@ type Data struct {
 	Items []person
 }
 
-var users = []*person{}
+var users = []person{}
 
 func login(w http.ResponseWriter, r *http.Request) {
 
 	r.ParseForm()
 	// logic part of log in
-
 	uname := strings.Join(r.Form["username"], " ")
 	psw := strings.Join(r.Form["password"], " ")
-
-	fmt.Println("Useruname: ", uname)
-	fmt.Println("Userpsw: ", psw)
 
 	for _, p := range users {
 		if (strings.Compare(p.username, uname))+(strings.Compare(p.password, psw)) == 0 {
@@ -59,15 +56,9 @@ func signUp(w http.ResponseWriter, r *http.Request) {
 		lname := strings.Join(r.Form["lname"], " ")
 		birthDate := strings.Join(r.Form["birthDate"], " ")
 		p := person{username: username, password: password, fname: fname, lname: lname, birthDate: birthDate}
-		users = append(users, &p)
+		users = append(users, p)
 
-		csvwriter := csv.NewWriter("data.csv")
-
-		for _, empRow := range empData {
-			_ = csvwriter.Write(empRow)
-		}
-
-		csvwriter.Flush()
+		saveData()
 
 		http.Redirect(w, r, "/login", http.StatusFound)
 
@@ -78,15 +69,80 @@ func signUp(w http.ResponseWriter, r *http.Request) {
 func signIn(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles("signIn.html")
 	t.Execute(w, nil)
-	for _, p := range users {
-		fmt.Println("UN: " + p.username + "PS: " + p.password)
-	}
 	r.ParseForm()
 
 }
 
+func readData() {
+	f, err := os.Open("data.csv")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer f.Close()
+
+	csvReader := csv.NewReader(f)
+	data, err := csvReader.ReadAll()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	users = updateUsers(data)
+
+}
+
+func updateUsers(data [][]string) []person {
+	var usersList []person
+	for i, line := range data {
+		if i > 0 {
+			var rec person
+			for j, field := range line {
+				if j == 0 {
+					rec.username = field
+				} else if j == 1 {
+					rec.password = field
+				} else if j == 2 {
+					rec.fname = field
+				} else if j == 2 {
+					rec.lname = field
+				} else if j == 2 {
+					rec.birthDate = field
+				}
+
+			}
+			usersList = append(usersList, rec)
+		}
+	}
+	return usersList
+}
+
+func saveData() {
+	file, err := os.Create("data.csv")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	// initialize csv writer
+	writer := csv.NewWriter(file)
+
+	defer writer.Flush()
+
+	data := [][]string{}
+
+	for _, p := range users {
+		d := []string{p.username, p.password, p.fname, p.lname, p.birthDate}
+
+		data = append(data, d)
+
+	}
+	// write all rows at once
+	writer.WriteAll(data)
+
+}
+
 func main() {
-	users = append(users, &person{username: "admin", password: "admin", fname: "admin", lname: "admin", birthDate: "3/3/3"})
+	readData()
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/signUp", signUp)
 	http.HandleFunc("/signIn", signIn)
